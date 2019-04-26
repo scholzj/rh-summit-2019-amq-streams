@@ -135,7 +135,7 @@ spec:
     gcLoggingEnabled: false
 ---
 
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: my-connect-cluster
@@ -237,7 +237,7 @@ spec:
     app: ui-price-viewer
 ---
 
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: ui-price-viewer

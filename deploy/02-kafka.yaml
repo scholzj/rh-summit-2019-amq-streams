@@ -35,7 +35,7 @@ spec:
                 app: ui-trade-manager
           - podSelector:
               matchLabels:
-                app: portfolio-aggregator
+                app: trade-aggregator
           - podSelector:
               matchLabels:
                 app: ui-portfolio-viewer

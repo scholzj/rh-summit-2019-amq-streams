@@ -1,8 +1,6 @@
-# Quarterly Deep Dive Enablement demo
+# Red Hat Summit 2019 - AMQ Streams demo
 
-This demo shows deployment of AMQ Streams 1.1 on OpenShift togerther with a simple demo application which demonstrates different common patterns used with Apache Kafka.
-
-The Java source codes for the demo can be found [here](https://github.com/scholzj/kafka-shares-demo).
+This demo shows deployment of AMQ Streams 1.1 on OpenShift together with a simple demo application which demonstrates different common patterns used with Apache Kafka.
 
 ## Create Projects / namespaces
 
@@ -47,7 +45,7 @@ oc apply -f 04-price-feed.yaml
 
 * Add the Price feed connector to the image
 ```
-oc start-build my-connect-cluster-connect --from-dir ./05-price-feed-connector --follow
+oc start-build my-connect-cluster-connect --from-dir ./05-price-feed-connector
 ```
 
 * Check that the connector plugin was build into the image (uses [HTTPie](https://httpie.org/))

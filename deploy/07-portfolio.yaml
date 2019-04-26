@@ -201,7 +201,7 @@ spec:
     app: ui-portfolio-viewer
 ---
 
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: ui-portfolio-viewer
