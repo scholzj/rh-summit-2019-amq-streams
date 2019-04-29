@@ -21,8 +21,6 @@
         <module>ui-trade-manager</module>
         <module>price-feed-connector</module>
         <module>ui-price-viewer</module>
-        <module>trade-aggregator</module>
-        <module>ui-portfolio-viewer</module>
         <module>pricer</module>
         <module>ui-priced-portfolio-viewer</module>
     </modules>

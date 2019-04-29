@@ -35,16 +35,10 @@ spec:
                 app: ui-trade-manager
           - podSelector:
               matchLabels:
-                app: trade-aggregator
-          - podSelector:
-              matchLabels:
                 app: ui-portfolio-viewer
           - podSelector:
               matchLabels:
                 app: pricer
-          - podSelector:
-              matchLabels:
-                app: ui-priced-portfolio-viewer
       external:
         type: route
         authentication:
