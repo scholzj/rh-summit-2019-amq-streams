@@ -1,0 +1,118 @@
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaUser
+metadata:
+  name: my-connect-cluster
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+    # Kafka Connects internal topics
+    - resource:
+        type: group
+        name: connect-cluster
+      operation: Read
+    - resource:
+        type: topic
+        name: connect-cluster-configs
+      operation: Read
+    - resource:
+        type: topic
+        name: connect-cluster-configs
+      operation: Describe
+    - resource:
+        type: topic
+        name: connect-cluster-configs
+      operation: Write
+    - resource:
+        type: topic
+        name: connect-cluster-configs
+      operation: Describe
+    - resource:
+        type: topic
+        name: connect-cluster-configs
+      operation: Create
+    - resource:
+        type: topic
+        name: connect-cluster-status
+      operation: Read
+    - resource:
+        type: topic
+        name: connect-cluster-status
+      operation: Describe
+    - resource:
+        type: topic
+        name: connect-cluster-status
+      operation: Write
+    - resource:
+        type: topic
+        name: connect-cluster-status
+      operation: Describe
+    - resource:
+        type: topic
+        name: connect-cluster-status
+      operation: Create
+    - resource:
+        type: topic
+        name: connect-cluster-offsets
+      operation: Read
+    - resource:
+        type: topic
+        name: connect-cluster-offsets
+      operation: Describe
+    - resource:
+        type: topic
+        name: connect-cluster-offsets
+      operation: Write
+    - resource:
+        type: topic
+        name: connect-cluster-offsets
+      operation: Describe
+    - resource:
+        type: topic
+        name: connect-cluster-offsets
+      operation: Create
+---
+
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaConnect
+metadata:
+  name: my-connect-cluster
+  labels:
+    app: my-connect-cluster
+spec:
+  image: quay.io/scholzj/rh-summit-2019-amq-streams:price-feed-connector
+  version: 2.1.1
+  replicas: 1
+  bootstrapServers: my-cluster-kafka-bootstrap:9093
+  tls:
+    trustedCertificates:
+    - secretName: my-cluster-cluster-ca-cert
+      certificate: ca.crt
+  metrics:
+    lowercaseOutputName: true
+  authentication:
+    type: tls
+    certificateAndKey:
+      secretName: my-connect-cluster
+      certificate: user.crt
+      key: user.key
+  jvmOptions:
+    gcLoggingEnabled: false
+---
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: my-connect-cluster
+  labels:
+    app: my-connect-cluster
+spec:
+  port:
+    targetPort: rest-api
+  to:
+    kind: Service
+    name: my-connect-cluster-connect-api

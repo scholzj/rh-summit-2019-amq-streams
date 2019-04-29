@@ -21,10 +21,10 @@ import org.slf4j.LoggerFactory;
 public class PortfolioViewer extends AbstractVerticle {
     private static final Logger log = LoggerFactory.getLogger(PortfolioViewer.class.getName());
 
-    private final Map<String, Integer> portfolio = new HashMap<>();
+    private final Map<String, Float> portfolio = new HashMap<>();
 
     private final PortfolioViewerConfig verticleConfig;
-    private KafkaConsumer<String, Integer> consumer;
+    private KafkaConsumer<String, Float> consumer;
 
     public PortfolioViewer(PortfolioViewerConfig verticleConfig) {
         log.info("Creating PortfolioViewer");
@@ -44,7 +44,7 @@ public class PortfolioViewer extends AbstractVerticle {
         config.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         config.put("value.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeerializer");
-        config.put("value.deserializer", "org.apache.kafka.common.serialization.IntegerDeserializer");
+        config.put("value.deserializer", "org.apache.kafka.common.serialization.FloatDeserializer");
         config.put("enable.auto.commit", "false");
         config.put("auto.offset.reset", "earliest");
         config.put("group.id", verticleConfig.getGroupId());
@@ -76,7 +76,7 @@ public class PortfolioViewer extends AbstractVerticle {
             }
         }
 
-        consumer = KafkaConsumer.create(vertx, config, String.class, Integer.class);
+        consumer = KafkaConsumer.create(vertx, config, String.class, Float.class);
         consumer.handler(res -> {
             log.info("Adding {} to portfolio list", res.key(), res.value());
             portfolio.put(res.key(), res.value());
@@ -106,7 +106,7 @@ public class PortfolioViewer extends AbstractVerticle {
         router.get("/portfolioviewer").handler(req -> {
             log.info("Received GET /portfolioviewer request");
 
-            String output = new JsonArray(portfolio.entrySet().stream().map(entry -> new JsonObject().put("code", entry.getKey()).put("amount", entry.getValue())).collect(Collectors.toList())).encodePrettily();
+            String output = new JsonArray(portfolio.entrySet().stream().map(entry -> new JsonObject().put("code", entry.getKey()).put("value", String.format("%.2f", entry.getValue()))).collect(Collectors.toList())).encodePrettily();
 
             HttpServerResponse response = req.response();
             response.putHeader("content-type", "application/json");

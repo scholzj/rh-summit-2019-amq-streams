@@ -1,4 +1,4 @@
-PROJECT_NAME=share-price-feed-connector
+PROJECT_NAME=price-feed-connector
 
 all: java_build docker_build docker_push
 build: java_build

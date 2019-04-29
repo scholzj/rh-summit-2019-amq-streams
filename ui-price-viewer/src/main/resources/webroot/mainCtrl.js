@@ -44,3 +44,46 @@ app.controller('mainCtrl', function($scope,$interval,NgTableParams,$resource,ngD
 
     $scope.reload = $interval(function() {$scope.tableParams.reload()}, 5000);
 });
+
+app.directive('highlighter', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        scope: {
+            model: '=highlighter'
+        },
+        link: function(scope, element) {
+            scope.$watch('model', function (nv, ov) {
+                if (nv !== ov) {
+                    // apply class
+                    element.addClass('highlight');
+
+                    // auto remove after some delay
+                    $timeout(function () {
+                        element.removeClass('highlight');
+                    }, 1000);
+                }
+            });
+        }
+    };
+}]);
+
+app.directive('arrow', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        scope: {
+            model: '=arrow'
+        },
+        link: function(scope, element) {
+            scope.$watch('model', function (nv, ov) {
+                if (nv > ov) {
+                    // apply class
+                    element.removeClass('fa-caret-down');
+                    element.addClass('fa-caret-up');
+                } else if (nv < ov) {
+                    element.addClass('fa-caret-down');
+                    element.removeClass('fa-caret-up');
+                }
+            });
+        }
+    };
+}]);
