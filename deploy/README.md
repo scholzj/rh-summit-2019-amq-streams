@@ -10,6 +10,14 @@ This demo shows deployment of AMQ Streams 1.1.0 on OpenShift together with a sim
 oc new-project amq-streams-demo
 ```
 
+* Install the Prometheus and Grafana
+
+```
+oc apply -f 00-prometheus-grafana
+```
+
+* Deploy Grafana Dashboards
+
 ## Install AMQ Streams operator
 
 * Install AMQ Streams 1.1.0
