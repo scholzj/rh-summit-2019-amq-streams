@@ -7,6 +7,6 @@
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
     "value.converter": "org.apache.kafka.connect.converters.FloatConverter",
     "topic": "prices",
-    "frequency": "1"
+    "frequency": "2"
   }
 }

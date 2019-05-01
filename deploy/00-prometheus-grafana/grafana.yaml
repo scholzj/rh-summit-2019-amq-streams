@@ -48,3 +48,18 @@ spec:
   selector:
     name: grafana
   type: ClusterIP
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: grafana
+  labels:
+    app: prometheus
+spec:
+  port:
+    targetPort: grafana
+  to:
+    kind: Service
+    name: grafana
+    weight: 100

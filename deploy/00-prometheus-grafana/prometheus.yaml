@@ -44,7 +44,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-server
-  namespace: myproject
+  namespace: amq-streams-demo
 
 ---
 apiVersion: extensions/v1beta1
@@ -458,18 +458,3 @@ spec:
   selector:
     name: prometheus
   type: ClusterIP
-
----
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  name: grafana
-  labels:
-    app: prometheus
-spec:
-  port:
-    targetPort: grafana
-  to:
-    kind: Service
-    name: grafana
-    weight: 100
