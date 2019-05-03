@@ -57,7 +57,8 @@ We will use here pre-build image which already contains the connector.
 You can also use Source2Image to build a new image with the connector.
 But that takes too much time.
 
-* Deploy Kafka Connect
+* Deploy Kafka Connect. 
+This also deploys the UI for checking the price updates. 
 
 ```
 oc apply -f 04-kafka-connect.yaml
@@ -73,23 +74,10 @@ http http://my-connect-cluster-amq-streams-demo.apps.jscholz.devcluster.openshif
 
 ## Deploy the price feed connector
 
-The price feed will send updates with new prices of selected shares.
-The price feed here is just a demo.
-It generates random prices for selected stock tickers.
-It runs as a plugin inside Kafka Connect to demonstrate Kafka Connect and possibility to write your own connectors.
-The share prices are sent as individual events with the share code as key and the price as the payload.
-
-* Update the Kafka Connect use and create the topic where it will send the prices.
-This also deploys the UI for checking the price updates. 
-
-```
-oc apply -f 05-price-feed.yaml
-```
-
 * Deploy the price feed connector (uses [HTTPie](https://httpie.org/))
 
 ```
-http http://my-connect-cluster-amq-streams-demo.apps.jscholz.devcluster.openshift.com/connectors < 06-price-feed-connector.json
+http http://my-connect-cluster-amq-streams-demo.apps.jscholz.devcluster.openshift.com/connectors < 05-price-feed-connector.json
 ```
 
 * Check that the pods are working and use to UI to see how the prices are generated.
@@ -106,7 +94,7 @@ This is implemented by a simple Kafka Streams application which reads data from 
 
 * Deploy the pricer and a simple UI for monitoring the prices
 ```
-oc apply -f 07-pricer.yaml
+oc apply -f 06-pricer.yaml
 ```
 
 * Check that the pods are working and use to pricer UI to see the portfolio and its value
