@@ -53,15 +53,15 @@ public class PricerConfig {
         return bootstrapServers;
     }
 
-    public String getLeftSourceTopic() {
+    public String getTradesTopic() {
         return leftSourceTopic;
     }
 
-    public String getRightSourceTopic() {
+    public String getPricesTopic() {
         return rightSourceTopic;
     }
 
-    public String getTargetTopic() {
+    public String getPortfolioTopic() {
         return targetTopic;
     }
 

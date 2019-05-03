@@ -16,17 +16,18 @@ public class Main {
         Properties kafkaStreamsConfig = PricerConfig.getKafkaStreamsProperties(config);
 
         StreamsBuilder builder = new StreamsBuilder();
-        KTable<String, Integer> positions = builder.stream(config.getLeftSourceTopic(), Consumed.with(Serdes.String(), Serdes.Integer()))
+        KTable<String, Integer> positions = builder
+                .stream(config.getTradesTopic(), Consumed.with(Serdes.String(), Serdes.Integer()))
                 .groupByKey().aggregate(
                     () -> 0,
                     (aggKey, newValue, aggValue) -> aggValue + newValue,
                     Materialized.with(Serdes.String(), Serdes.Integer()));
         KTable<String, Float> prices = builder
-                .table(config.getRightSourceTopic(), Consumed.with(Serdes.String(), Serdes.Float()));
+                .table(config.getPricesTopic(), Consumed.with(Serdes.String(), Serdes.Float()));
 
         positions.leftJoin(prices, (leftValue, rightValue) -> calculatePrice(leftValue, rightValue))
                 .toStream()
-                .to(config.getTargetTopic(), Produced.with(Serdes.String(), Serdes.Float()));
+                .to(config.getPortfolioTopic(), Produced.with(Serdes.String(), Serdes.Float()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), kafkaStreamsConfig);
         streams.start();
