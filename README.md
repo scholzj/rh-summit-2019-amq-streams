@@ -1,7 +1,14 @@
 # AMQ Streams demo for Red Hat Summit 2019
 
 This demo shows a simple application using AMQ Streams 1.1.0 on OpenShift.
+
+## Run the demo
+
 The deployment instructions and YAML files are in the [`./deploy`](./deploy/) directory. 
+
+## Slides
+
+The slides from the Red Hat Summit talk can be found [here](https://docs.google.com/presentation/d/1CHvhccGpMz8-p7pSg5JSqnjHvKh5Jcxot8_hr5PVhZI/edit?usp=sharing).
 
 ## Demo recordings
 
